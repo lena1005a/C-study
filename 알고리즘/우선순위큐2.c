@@ -17,10 +17,11 @@ int main() {
 		index = i;
 		for (int j = i - 1; j >= 0; j--) {
 			if (n[i] < n[j]) index = j;
+			else break;
 		}
 		tmp = n[i];
 		for (int k = i; k > index; k--) {
-			n[k] = n[k-1];
+			n[k] = n[k - 1];
 		}
 		n[index] = tmp;
 
