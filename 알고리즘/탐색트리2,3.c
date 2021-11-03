@@ -14,12 +14,12 @@ bool isRoot();
 
 void insertItem();
 AVL *treeSearch();
+
 bool isExternal();
 bool isInternal();
 void expandExternal();
 void updateHeightToRoot();
 int searchHeight();
-void updateHeight();
 void searchAndFixAfterInsertion();
 
 AVL *removeElement();
@@ -82,24 +82,22 @@ int main() {
 	}
 }
 
-
-bool isRoot(AVL *node) {
-	if (node->parent == NULL) return true;
-	return false;
-}
 AVL *findRoot(AVL *node) {
 	while (!isRoot(node)) node = node->parent;
 	return node;
 }
-
+bool isRoot(AVL *node) {
+	if (node->parent == NULL) return true;
+	return false;
+}
 
 void insertItem(AVL *root, int key) {
 	AVL *tmp = treeSearch(root, key);
 	if (isInternal(tmp)) return;
 	tmp->key = key;
 	expandExternal(tmp);
-	updateHeightToRoot(tmp); 
-	searchAndFixAfterInsertion(tmp); 
+	updateHeightToRoot(tmp);
+	searchAndFixAfterInsertion(tmp);
 }
 
 void updateHeightToRoot(AVL *node) {
@@ -310,12 +308,8 @@ AVL *restructure(AVL *nodeX, AVL *nodeY, AVL *nodeZ) {
 	nodeC->lChild = subtree2;
 	nodeC->rChild = subtree3;
 	subtree2->parent = subtree3->parent = nodeC;
-	updateHeight(nodeA);
-	updateHeight(nodeC);
+	nodeA->height = searchHeight(nodeA);
+	nodeC->height = searchHeight(nodeC);
 	updateHeightToRoot(nodeB);
 	return nodeB;
-}
-
-void updateHeight(AVL *node) {
-	node->height = searchHeight(node);
 }
